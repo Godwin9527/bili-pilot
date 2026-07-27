@@ -1,0 +1,405 @@
+{
+  "extensionName": {
+    "message": "Bili Pilot"
+  },
+  "extensionDescription": {
+    "message": "选择更稳定的哔哩哔哩播放 CDN，并在不抢占播放带宽的前提下自适应预缓存未来 DASH 分片。"
+  },
+  "appName": {
+    "message": "Bili Pilot"
+  },
+  "expandPanel": {
+    "message": "展开 Bili Pilot"
+  },
+  "collapsePanel": {
+    "message": "收起 Bili Pilot"
+  },
+  "tagline": {
+    "message": "为当前视频选择稳定线路"
+  },
+  "standby": {
+    "message": "待命"
+  },
+  "scanning": {
+    "message": "扫描中"
+  },
+  "currentQuality": {
+    "message": "当前画质 / 真实分片保护"
+  },
+  "waitingForVideo": {
+    "message": "等待视频"
+  },
+  "videoNotDetected": {
+    "message": "尚未识别视频"
+  },
+  "waitingForRoutes": {
+    "message": "等待播放器提供 CDN 线路…"
+  },
+  "reloadPage": {
+    "message": "重新加载页面"
+  },
+  "automaticRoutingTitle": {
+    "message": "自动选线 + 分片预缓存"
+  },
+  "activityLogs": {
+    "message": "Bili Pilot 活动"
+  },
+  "checkLogs": {
+    "message": "查看日志"
+  },
+  "closeLogs": {
+    "message": "关闭日志"
+  },
+  "noLogsYet": {
+    "message": "Bili Pilot 还没有执行任何操作。"
+  },
+  "activityScanStarted": { "message": "扫描已开始" },
+  "activityScanFinished": { "message": "扫描已完成" },
+  "activityScanFailed": { "message": "扫描失败" },
+  "activityProbeStarted": {
+    "message": "开始探测 $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityProbeFinished": {
+    "message": "$VALUE_1$ 探测完成",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteSelected": {
+    "message": "播放线路已切换到 $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteAvoided": {
+    "message": "暂时避开 $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteRescue": {
+    "message": "$VALUE_2$ 恢复期间改用 $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" }, "value_2": { "content": "$2" } }
+  },
+  "activityPrefetchEnabled": { "message": "已开启自动选线和分片预缓存" },
+  "activityPrefetchDisabled": { "message": "已关闭自动选线和分片预缓存" },
+  "activitySegmentsPlanned": {
+    "message": "$VALUE_1$ 个未来分片已进入队列",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRetrying": { "message": "重试中" },
+  "activityCancelled": { "message": "已取消" },
+  "activitySegmentPrioritized": { "message": "已优先处理播放器请求的分片" },
+  "activityCacheDelivered": { "message": "已把缓存分片交给播放器" },
+  "activityTransfer": {
+    "message": "$VALUE_1$ MB / $VALUE_2$ ms",
+    "placeholders": { "value_1": { "content": "$1" }, "value_2": { "content": "$2" } }
+  },
+  "futureSegmentLifecycle": {
+    "message": "未来分片状态"
+  },
+  "candidateCdns": {
+    "message": "候选 CDN"
+  },
+  "routeCount": {
+    "message": "$VALUE_1$ 条线路",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "quickScan": {
+    "message": "快速扫描"
+  },
+  "deepScan": {
+    "message": "深度扫描"
+  },
+  "footer": {
+    "message": "选择稳定主线路；每个未来分片从最快 CDN 预缓存 / v$VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "reprobeSeconds": {
+    "message": "$VALUE_1$ 秒后重测",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "unavailable": {
+    "message": "不可用"
+  },
+  "foreground": {
+    "message": "播放优先"
+  },
+  "downloading": {
+    "message": "下载中"
+  },
+  "planned": {
+    "message": "已规划"
+  },
+  "ready": {
+    "message": "已就绪"
+  },
+  "retryProgress": {
+    "message": "重试 $VALUE_1$/$VALUE_2$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "pending": {
+    "message": "等待中"
+  },
+  "selected": {
+    "message": "已选择"
+  },
+  "bilibiliDefault": {
+    "message": "B 站默认"
+  },
+  "leading": {
+    "message": "暂时领先"
+  },
+  "mostStable": {
+    "message": "最稳定"
+  },
+  "pinned": {
+    "message": "已固定"
+  },
+  "use": {
+    "message": "使用"
+  },
+  "floorSpeed": {
+    "message": "保底 $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "waitingForScan": {
+    "message": "等待测速"
+  },
+  "failureCount": {
+    "message": "$VALUE_1$ 次失败",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "openVideo": {
+    "message": "打开一个哔哩哔哩视频后，这里会显示可用的 CDN 线路。"
+  },
+  "ttfbTitle": {
+    "message": "首字节 $VALUE_1$ 毫秒",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "failureRangeUnavailable": {
+    "message": "区间不可用"
+  },
+  "failureNetwork": {
+    "message": "网络错误"
+  },
+  "failureSkipped": {
+    "message": "已跳过"
+  },
+  "failureStoppedEarly": {
+    "message": "提前停止"
+  },
+  "failurePositionUnavailable": {
+    "message": "位置不可用"
+  },
+  "failureTimedOut": {
+    "message": "超时"
+  },
+  "failureGeneric": {
+    "message": "失败"
+  },
+  "pageProbeTimedOut": {
+    "message": "页面侧测速超时"
+  },
+  "extensionUpdated": {
+    "message": "扩展已更新。请重新加载此页面后再测速。"
+  },
+  "noRoutesToCompare": {
+    "message": "没有可供比较的 CDN 线路"
+  },
+  "scanningDeep": {
+    "message": "正在依次检测每个 CDN 的开头和三个后续位置…"
+  },
+  "scanningAutomatic": {
+    "message": "播放缓冲充足，正在自动比较主线路…"
+  },
+  "scanningQuick": {
+    "message": "正在依次比较每个 CDN 的开头和中点…"
+  },
+  "activeTrackChanged": {
+    "message": "当前媒体轨道已变化，已忽略上一轨道的测速结果"
+  },
+  "everyRouteFailed": {
+    "message": "所有候选线路测速均失败"
+  },
+  "winnerHasFailures": {
+    "message": "$VALUE_1$ 暂时领先，但部分采样区间仍然失败",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bestRouteTooSlow": {
+    "message": "最佳线路仅能维持 $VALUE_1$，可能无法支持 $VALUE_2$。建议降低画质。",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "winnerStable": {
+    "message": "$VALUE_1$ 最稳定，保底速度为 $VALUE_2$。点击“使用”即可切换。",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "automaticallyPinned": {
+    "message": "$VALUE_1$ 已自动固定为稳定主线路；未来分片将继续预缓存",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "candidatesTooClose": {
+    "message": "各线路表现过于接近；为避免反复切换，继续使用当前线路"
+  },
+  "scanFailed": {
+    "message": "测速失败：$VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "automaticRouteQueued": {
+    "message": "已自动选择明显更稳定的线路；将在下一个分片切换…"
+  },
+  "manualRouteQueued": {
+    "message": "线路切换已排队；将在下一个分片生效…"
+  },
+  "prefetchEnabled": {
+    "message": "自动择优已开启：缓冲充足时选择稳定主线路，并逐个预缓存未来分片"
+  },
+  "prefetchDisabled": {
+    "message": "未来分片预缓存已关闭；播放器将继续直接使用已选 CDN"
+  },
+  "pageProbeNoResult": {
+    "message": "页面侧测速没有返回结果"
+  },
+  "playbackStalling": {
+    "message": "检测到播放卡顿；正在重新评估可用 CDN 线路"
+  },
+  "pinnedTo": {
+    "message": "已固定到 $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "foundRoutes": {
+    "message": "发现 $VALUE_1$ 条可测速线路",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "discoveringNewVideo": {
+    "message": "正在发现新视频的线路…"
+  },
+  "selectedNextSegment": {
+    "message": "已选择 $VALUE_1$；将从下一个视频分片开始使用，不中断当前请求",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "playerRangeTimedOut": {
+    "message": "播放器在 $VALUE_1$ 上的区间请求超时；下次重试将使用其他可用线路",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "playerRangeNetworkFailure": {
+    "message": "$VALUE_1$ 上的当前播放区间发生网络错误；下次重试将使用其他可用线路",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "prefetchUnavailable": {
+    "message": "预缓存暂时不可用：$VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "cacheHit": {
+    "message": "播放器命中预缓存；已立即交付 $VALUE_1$ MB",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "futureSegmentCached": {
+    "message": "未来分片已缓存：$VALUE_1$ / $VALUE_2$ MB",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "currentRoute": {
+    "message": "当前线路"
+  },
+  "allCdnsFailedTwice": {
+    "message": "此分片在所有可用 CDN 上均失败两次；已暂时隔离，让出网络给播放器"
+  },
+  "allCdnsFailedReprobe": {
+    "message": "此分片在所有已测速 CDN 上均失败；将在 $VALUE_1$ 秒后重新探测",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stallDetected": {
+    "message": "检测到卡顿；正在重新评估可用 CDN 线路"
+  }
+}

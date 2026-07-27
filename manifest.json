@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "0.1.0",
+  "default_locale": "en",
+  "minimum_chrome_version": "102",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.bilivideo.com/*",
+    "https://*.bilivideo.cn/*",
+    "https://*.akamaized.net/*",
+    "https://*.gcdn.co/*",
+    "https://*.hdslb.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.bilibili.com/video/*"
+      ],
+      "js": [
+        "page-protocol.js",
+        "core.js",
+        "probe-core.js",
+        "prefetch-store.js",
+        "prefetch-policy.js",
+        "prefetch-runtime.js",
+        "cached-xhr.js",
+        "page-hook.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://www.bilibili.com/video/*"
+      ],
+      "js": [
+        "protocol.js",
+        "i18n.js",
+        "ui-model.js",
+        "auto-probe-policy.js",
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "__MSG_extensionName__"
+  }
+}

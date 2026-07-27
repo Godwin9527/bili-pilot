@@ -1,0 +1,405 @@
+{
+  "extensionName": {
+    "message": "Bili Pilot"
+  },
+  "extensionDescription": {
+    "message": "Select a Bilibili playback CDN and adaptively pre-cache future DASH segments without competing with playback."
+  },
+  "appName": {
+    "message": "Bili Pilot"
+  },
+  "expandPanel": {
+    "message": "Expand Bili Pilot"
+  },
+  "collapsePanel": {
+    "message": "Collapse Bili Pilot"
+  },
+  "tagline": {
+    "message": "Choose a stable route for this video"
+  },
+  "standby": {
+    "message": "Standby"
+  },
+  "scanning": {
+    "message": "Scanning"
+  },
+  "currentQuality": {
+    "message": "Current quality / Real-segment protection"
+  },
+  "waitingForVideo": {
+    "message": "Waiting for video"
+  },
+  "videoNotDetected": {
+    "message": "Video not detected yet"
+  },
+  "waitingForRoutes": {
+    "message": "Waiting for the player to provide CDN routes…"
+  },
+  "reloadPage": {
+    "message": "Reload page"
+  },
+  "automaticRoutingTitle": {
+    "message": "Automatic routing + pre-caching segments"
+  },
+  "activityLogs": {
+    "message": "Bili Pilot activity"
+  },
+  "checkLogs": {
+    "message": "Check logs"
+  },
+  "closeLogs": {
+    "message": "Close logs"
+  },
+  "noLogsYet": {
+    "message": "No Bili Pilot activity yet."
+  },
+  "activityScanStarted": { "message": "Scan started" },
+  "activityScanFinished": { "message": "Scan completed" },
+  "activityScanFailed": { "message": "Scan failed" },
+  "activityProbeStarted": {
+    "message": "Testing $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityProbeFinished": {
+    "message": "Tested $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteSelected": {
+    "message": "Playback route changed to $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteAvoided": {
+    "message": "Temporarily avoiding $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteRescue": {
+    "message": "Using $VALUE_1$ while $VALUE_2$ recovers",
+    "placeholders": { "value_1": { "content": "$1" }, "value_2": { "content": "$2" } }
+  },
+  "activityPrefetchEnabled": { "message": "Automatic routing and pre-cache enabled" },
+  "activityPrefetchDisabled": { "message": "Automatic routing and pre-cache disabled" },
+  "activitySegmentsPlanned": {
+    "message": "$VALUE_1$ future segments queued",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRetrying": { "message": "Retrying" },
+  "activityCancelled": { "message": "Cancelled" },
+  "activitySegmentPrioritized": { "message": "Prioritized a segment requested by the player" },
+  "activityCacheDelivered": { "message": "Delivered a cached segment to the player" },
+  "activityTransfer": {
+    "message": "$VALUE_1$ MB in $VALUE_2$ ms",
+    "placeholders": { "value_1": { "content": "$1" }, "value_2": { "content": "$2" } }
+  },
+  "futureSegmentLifecycle": {
+    "message": "Future segment lifecycle"
+  },
+  "candidateCdns": {
+    "message": "Candidate CDNs"
+  },
+  "routeCount": {
+    "message": "$VALUE_1$ routes",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "quickScan": {
+    "message": "Quick scan"
+  },
+  "deepScan": {
+    "message": "Deep scan"
+  },
+  "footer": {
+    "message": "Choose a stable primary route; prefetch each future segment from its fastest CDN / v$VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "reprobeSeconds": {
+    "message": "Re-probe $VALUE_1$s",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "unavailable": {
+    "message": "Unavailable"
+  },
+  "foreground": {
+    "message": "Foreground"
+  },
+  "downloading": {
+    "message": "Downloading"
+  },
+  "planned": {
+    "message": "Planned"
+  },
+  "ready": {
+    "message": "Ready"
+  },
+  "retryProgress": {
+    "message": "Retry $VALUE_1$/$VALUE_2$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "pending": {
+    "message": "Pending"
+  },
+  "selected": {
+    "message": "Selected"
+  },
+  "bilibiliDefault": {
+    "message": "Bilibili default"
+  },
+  "leading": {
+    "message": "Leading"
+  },
+  "mostStable": {
+    "message": "Most stable"
+  },
+  "pinned": {
+    "message": "Pinned"
+  },
+  "use": {
+    "message": "Use"
+  },
+  "floorSpeed": {
+    "message": "Floor $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "waitingForScan": {
+    "message": "Waiting for scan"
+  },
+  "failureCount": {
+    "message": "$VALUE_1$ failures",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "openVideo": {
+    "message": "Open a Bilibili video to discover its available CDN routes."
+  },
+  "ttfbTitle": {
+    "message": "$VALUE_1$ ms TTFB",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "failureRangeUnavailable": {
+    "message": "Range unavailable"
+  },
+  "failureNetwork": {
+    "message": "Network error"
+  },
+  "failureSkipped": {
+    "message": "Skipped"
+  },
+  "failureStoppedEarly": {
+    "message": "Stopped early"
+  },
+  "failurePositionUnavailable": {
+    "message": "Position unavailable"
+  },
+  "failureTimedOut": {
+    "message": "Timed out"
+  },
+  "failureGeneric": {
+    "message": "Failed"
+  },
+  "pageProbeTimedOut": {
+    "message": "Page-side probe timed out"
+  },
+  "extensionUpdated": {
+    "message": "The extension was updated. Reload this page before scanning again."
+  },
+  "noRoutesToCompare": {
+    "message": "No CDN routes are available for comparison"
+  },
+  "scanningDeep": {
+    "message": "Sequentially checking the beginning and three later positions on each CDN…"
+  },
+  "scanningAutomatic": {
+    "message": "Playback has enough buffer; automatically comparing primary routes…"
+  },
+  "scanningQuick": {
+    "message": "Sequentially comparing the beginning and midpoint on each CDN…"
+  },
+  "activeTrackChanged": {
+    "message": "The active track changed; results from the previous track were ignored"
+  },
+  "everyRouteFailed": {
+    "message": "Every candidate route failed the scan"
+  },
+  "winnerHasFailures": {
+    "message": "$VALUE_1$ is leading, but some sampled ranges still failed",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bestRouteTooSlow": {
+    "message": "The best route only sustained $VALUE_1$, which may not support $VALUE_2$. Consider lowering quality.",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "winnerStable": {
+    "message": "$VALUE_1$ is the most stable with a $VALUE_2$ floor. Click Use to switch.",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "automaticallyPinned": {
+    "message": "$VALUE_1$ was automatically pinned as the stable primary route; future segments will continue pre-caching",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "candidatesTooClose": {
+    "message": "The candidates are too close; keeping the current route to avoid route flapping"
+  },
+  "scanFailed": {
+    "message": "Scan failed: $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "automaticRouteQueued": {
+    "message": "A clearly more stable route was selected automatically; switching on the next segment…"
+  },
+  "manualRouteQueued": {
+    "message": "Route change queued; switching on the next segment…"
+  },
+  "prefetchEnabled": {
+    "message": "Automatic routing is enabled: choose a stable primary route when buffered, then pre-cache segment by segment"
+  },
+  "prefetchDisabled": {
+    "message": "Future-segment pre-cache is disabled; the player will continue using the selected CDN directly"
+  },
+  "pageProbeNoResult": {
+    "message": "The page-side probe returned no result"
+  },
+  "playbackStalling": {
+    "message": "Playback is stalling; re-checking the available CDN routes"
+  },
+  "pinnedTo": {
+    "message": "Pinned to $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "foundRoutes": {
+    "message": "Found $VALUE_1$ testable routes",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "discoveringNewVideo": {
+    "message": "Discovering routes for the new video…"
+  },
+  "selectedNextSegment": {
+    "message": "$VALUE_1$ selected; it will be used from the next video segment without interrupting the current request",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "playerRangeTimedOut": {
+    "message": "The player's Range timed out on $VALUE_1$; the next retry will use another available route",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "playerRangeNetworkFailure": {
+    "message": "$VALUE_1$ had a network failure on the current player Range; the next retry will use another available route",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "prefetchUnavailable": {
+    "message": "Pre-cache is temporarily unavailable: $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "cacheHit": {
+    "message": "The player hit the prefetch cache; $VALUE_1$ MB was delivered immediately",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "futureSegmentCached": {
+    "message": "Future segment cached: $VALUE_1$ / $VALUE_2$ MB",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "currentRoute": {
+    "message": "current route"
+  },
+  "allCdnsFailedTwice": {
+    "message": "Every available CDN failed twice for this segment; it is quarantined so playback keeps the network"
+  },
+  "allCdnsFailedReprobe": {
+    "message": "Every measured CDN failed for this segment; re-probing in $VALUE_1$s",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stallDetected": {
+    "message": "A stall was detected; re-checking the available CDN routes"
+  }
+}

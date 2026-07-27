@@ -1,0 +1,405 @@
+{
+  "extensionName": {
+    "message": "Bili Pilot"
+  },
+  "extensionDescription": {
+    "message": "選擇更穩定的嗶哩嗶哩播放 CDN，並在不搶佔播放頻寬的前提下自適應預先快取未來 DASH 分片。"
+  },
+  "appName": {
+    "message": "Bili Pilot"
+  },
+  "expandPanel": {
+    "message": "展開 Bili Pilot"
+  },
+  "collapsePanel": {
+    "message": "收起 Bili Pilot"
+  },
+  "tagline": {
+    "message": "為目前影片選擇穩定線路"
+  },
+  "standby": {
+    "message": "待命"
+  },
+  "scanning": {
+    "message": "掃描中"
+  },
+  "currentQuality": {
+    "message": "目前畫質 / 真實分片保護"
+  },
+  "waitingForVideo": {
+    "message": "等待影片"
+  },
+  "videoNotDetected": {
+    "message": "尚未識別影片"
+  },
+  "waitingForRoutes": {
+    "message": "等待播放器提供 CDN 線路…"
+  },
+  "reloadPage": {
+    "message": "重新載入頁面"
+  },
+  "automaticRoutingTitle": {
+    "message": "自動選線 + 分片預先快取"
+  },
+  "activityLogs": {
+    "message": "Bili Pilot 活動"
+  },
+  "checkLogs": {
+    "message": "查看記錄"
+  },
+  "closeLogs": {
+    "message": "關閉記錄"
+  },
+  "noLogsYet": {
+    "message": "Bili Pilot 尚未執行任何操作。"
+  },
+  "activityScanStarted": { "message": "掃描已開始" },
+  "activityScanFinished": { "message": "掃描已完成" },
+  "activityScanFailed": { "message": "掃描失敗" },
+  "activityProbeStarted": {
+    "message": "開始探測 $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityProbeFinished": {
+    "message": "$VALUE_1$ 探測完成",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteSelected": {
+    "message": "播放線路已切換至 $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteAvoided": {
+    "message": "暫時避開 $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteRescue": {
+    "message": "$VALUE_2$ 恢復期間改用 $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" }, "value_2": { "content": "$2" } }
+  },
+  "activityPrefetchEnabled": { "message": "已開啟自動選線與分片預先快取" },
+  "activityPrefetchDisabled": { "message": "已關閉自動選線與分片預先快取" },
+  "activitySegmentsPlanned": {
+    "message": "$VALUE_1$ 個未來分片已進入佇列",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRetrying": { "message": "重試中" },
+  "activityCancelled": { "message": "已取消" },
+  "activitySegmentPrioritized": { "message": "已優先處理播放器要求的分片" },
+  "activityCacheDelivered": { "message": "已將快取分片交給播放器" },
+  "activityTransfer": {
+    "message": "$VALUE_1$ MB / $VALUE_2$ ms",
+    "placeholders": { "value_1": { "content": "$1" }, "value_2": { "content": "$2" } }
+  },
+  "futureSegmentLifecycle": {
+    "message": "未來分片狀態"
+  },
+  "candidateCdns": {
+    "message": "候選 CDN"
+  },
+  "routeCount": {
+    "message": "$VALUE_1$ 條線路",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "quickScan": {
+    "message": "快速掃描"
+  },
+  "deepScan": {
+    "message": "深度掃描"
+  },
+  "footer": {
+    "message": "選擇穩定主線路；每個未來分片從最快 CDN 預先快取 / v$VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "reprobeSeconds": {
+    "message": "$VALUE_1$ 秒後重測",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "unavailable": {
+    "message": "不可用"
+  },
+  "foreground": {
+    "message": "播放優先"
+  },
+  "downloading": {
+    "message": "下載中"
+  },
+  "planned": {
+    "message": "已規劃"
+  },
+  "ready": {
+    "message": "已就緒"
+  },
+  "retryProgress": {
+    "message": "重試 $VALUE_1$/$VALUE_2$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "pending": {
+    "message": "等待中"
+  },
+  "selected": {
+    "message": "已選擇"
+  },
+  "bilibiliDefault": {
+    "message": "B 站預設"
+  },
+  "leading": {
+    "message": "暫時領先"
+  },
+  "mostStable": {
+    "message": "最穩定"
+  },
+  "pinned": {
+    "message": "已固定"
+  },
+  "use": {
+    "message": "使用"
+  },
+  "floorSpeed": {
+    "message": "保底 $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "waitingForScan": {
+    "message": "等待測速"
+  },
+  "failureCount": {
+    "message": "$VALUE_1$ 次失敗",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "openVideo": {
+    "message": "開啟一個嗶哩嗶哩影片後，這裡會顯示可用的 CDN 線路。"
+  },
+  "ttfbTitle": {
+    "message": "首位元組 $VALUE_1$ 毫秒",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "failureRangeUnavailable": {
+    "message": "區間不可用"
+  },
+  "failureNetwork": {
+    "message": "網路錯誤"
+  },
+  "failureSkipped": {
+    "message": "已略過"
+  },
+  "failureStoppedEarly": {
+    "message": "提前停止"
+  },
+  "failurePositionUnavailable": {
+    "message": "位置不可用"
+  },
+  "failureTimedOut": {
+    "message": "逾時"
+  },
+  "failureGeneric": {
+    "message": "失敗"
+  },
+  "pageProbeTimedOut": {
+    "message": "頁面端測速逾時"
+  },
+  "extensionUpdated": {
+    "message": "擴充功能已更新。請重新載入此頁面後再測速。"
+  },
+  "noRoutesToCompare": {
+    "message": "沒有可供比較的 CDN 線路"
+  },
+  "scanningDeep": {
+    "message": "正在依序檢測每個 CDN 的開頭和三個後續位置…"
+  },
+  "scanningAutomatic": {
+    "message": "播放緩衝充足，正在自動比較主線路…"
+  },
+  "scanningQuick": {
+    "message": "正在依序比較每個 CDN 的開頭和中點…"
+  },
+  "activeTrackChanged": {
+    "message": "目前媒體軌道已變更，已忽略上一軌道的測速結果"
+  },
+  "everyRouteFailed": {
+    "message": "所有候選線路測速均失敗"
+  },
+  "winnerHasFailures": {
+    "message": "$VALUE_1$ 暫時領先，但部分取樣區間仍然失敗",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bestRouteTooSlow": {
+    "message": "最佳線路僅能維持 $VALUE_1$，可能無法支援 $VALUE_2$。建議降低畫質。",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "winnerStable": {
+    "message": "$VALUE_1$ 最穩定，保底速度為 $VALUE_2$。點選「使用」即可切換。",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "automaticallyPinned": {
+    "message": "$VALUE_1$ 已自動固定為穩定主線路；未來分片將繼續預先快取",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "candidatesTooClose": {
+    "message": "各線路表現過於接近；為避免反覆切換，繼續使用目前線路"
+  },
+  "scanFailed": {
+    "message": "測速失敗：$VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "automaticRouteQueued": {
+    "message": "已自動選擇明顯更穩定的線路；將在下一個分片切換…"
+  },
+  "manualRouteQueued": {
+    "message": "線路切換已排隊；將在下一個分片生效…"
+  },
+  "prefetchEnabled": {
+    "message": "自動擇優已開啟：緩衝充足時選擇穩定主線路，並逐一預先快取未來分片"
+  },
+  "prefetchDisabled": {
+    "message": "未來分片預先快取已關閉；播放器將繼續直接使用已選 CDN"
+  },
+  "pageProbeNoResult": {
+    "message": "頁面端測速沒有傳回結果"
+  },
+  "playbackStalling": {
+    "message": "偵測到播放卡頓；正在重新評估可用 CDN 線路"
+  },
+  "pinnedTo": {
+    "message": "已固定到 $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "foundRoutes": {
+    "message": "發現 $VALUE_1$ 條可測速線路",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "discoveringNewVideo": {
+    "message": "正在發現新影片的線路…"
+  },
+  "selectedNextSegment": {
+    "message": "已選擇 $VALUE_1$；將從下一個影片分片開始使用，不中斷目前請求",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "playerRangeTimedOut": {
+    "message": "播放器在 $VALUE_1$ 上的區間請求逾時；下次重試將使用其他可用線路",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "playerRangeNetworkFailure": {
+    "message": "$VALUE_1$ 上的目前播放區間發生網路錯誤；下次重試將使用其他可用線路",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "prefetchUnavailable": {
+    "message": "預先快取暫時不可用：$VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "cacheHit": {
+    "message": "播放器命中預先快取；已立即交付 $VALUE_1$ MB",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "futureSegmentCached": {
+    "message": "未來分片已快取：$VALUE_1$ / $VALUE_2$ MB",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "currentRoute": {
+    "message": "目前線路"
+  },
+  "allCdnsFailedTwice": {
+    "message": "此分片在所有可用 CDN 上均失敗兩次；已暫時隔離，讓出網路給播放器"
+  },
+  "allCdnsFailedReprobe": {
+    "message": "此分片在所有已測速 CDN 上均失敗；將在 $VALUE_1$ 秒後重新探測",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stallDetected": {
+    "message": "偵測到卡頓；正在重新評估可用 CDN 線路"
+  }
+}
