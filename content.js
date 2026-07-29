@@ -19,7 +19,10 @@
   const activityIds = new Set();
   const autoProbe = autoProbePolicy.createScheduler();
   const COMPACT_NOTICE_MS = 5000;
+  const DRAG_MARGIN = 8;
+  const DRAG_THRESHOLD = 4;
   const PANEL_CLOSE_MS = 220;
+  const PANEL_POSITION_KEY = "panelPositionV1";
   const extensionVersion = chrome.runtime.getManifest().version;
   const state = {
     compactNotice: "",
@@ -43,10 +46,13 @@
   let monitoredVideoProblemListener = null;
   let activitySequence = 0;
   let compactNoticeTimer = 0;
+  let dragState = null;
   let lastCompactNoticeKey = "";
+  let panelPosition = null;
   let panelCloseTimer = 0;
   let probeSequence = 0;
   let renderFrame = 0;
+  let suppressNextClick = false;
   const pendingProbeRequests = new Map();
 
   function post(type, detail = {}) {
@@ -109,6 +115,84 @@
       state.expanded = false;
       render();
     }, delay);
+  }
+
+  function applyPanelPosition(shell) {
+    if (!shell || !panelPosition) return;
+    shell.style.setProperty("--panel-right", `${Math.round(panelPosition.right)}px`);
+    shell.style.setProperty("--panel-bottom", `${Math.round(panelPosition.bottom)}px`);
+  }
+
+  function activePanelSurface(shell) {
+    return shell?.querySelector(state.expanded ? ".panel" : ".compact");
+  }
+
+  function clamp(value, minimum, maximum) {
+    return Math.min(maximum, Math.max(minimum, value));
+  }
+
+  function keepPanelOnScreen(shell) {
+    if (!shell || !panelPosition) return;
+    const surface = activePanelSurface(shell);
+    if (!surface) return;
+    const width = surface.offsetWidth;
+    const height = surface.offsetHeight;
+    const left = clamp(innerWidth - panelPosition.right - width, DRAG_MARGIN, Math.max(DRAG_MARGIN, innerWidth - DRAG_MARGIN - width));
+    const top = clamp(innerHeight - panelPosition.bottom - height, DRAG_MARGIN, Math.max(DRAG_MARGIN, innerHeight - DRAG_MARGIN - height));
+    panelPosition = {
+      right: innerWidth - left - width,
+      bottom: innerHeight - top - height
+    };
+    applyPanelPosition(shell);
+  }
+
+  function handlePointerDown(event) {
+    if (event.button !== 0) return;
+    const handle = event.target.closest(".compact, .panel-header");
+    if (!handle || (handle.matches(".panel-header") && event.target.closest("button, a, input, select, textarea"))) return;
+    const shell = handle.closest(".shell");
+    const surface = activePanelSurface(shell);
+    if (!shell || !surface) return;
+    const start = surface.getBoundingClientRect();
+    dragState = {
+      moved: false,
+      pointerId: event.pointerId,
+      shell,
+      start,
+      x: event.clientX,
+      y: event.clientY
+    };
+    shell.setPointerCapture(event.pointerId);
+  }
+
+  function handlePointerMove(event) {
+    if (!dragState || event.pointerId !== dragState.pointerId) return;
+    const deltaX = event.clientX - dragState.x;
+    const deltaY = event.clientY - dragState.y;
+    if (!dragState.moved && Math.hypot(deltaX, deltaY) < DRAG_THRESHOLD) return;
+    dragState.moved = true;
+    event.preventDefault();
+    dragState.shell.dataset.dragging = "true";
+    const { start } = dragState;
+    const left = clamp(start.left + deltaX, DRAG_MARGIN, Math.max(DRAG_MARGIN, innerWidth - DRAG_MARGIN - start.width));
+    const top = clamp(start.top + deltaY, DRAG_MARGIN, Math.max(DRAG_MARGIN, innerHeight - DRAG_MARGIN - start.height));
+    panelPosition = {
+      right: innerWidth - left - start.width,
+      bottom: innerHeight - top - start.height
+    };
+    applyPanelPosition(dragState.shell);
+  }
+
+  function handlePointerEnd(event) {
+    if (!dragState || event.pointerId !== dragState.pointerId) return;
+    const { moved, shell } = dragState;
+    dragState = null;
+    delete shell.dataset.dragging;
+    if (shell.hasPointerCapture(event.pointerId)) shell.releasePointerCapture(event.pointerId);
+    if (!moved) return;
+    suppressNextClick = true;
+    chrome.storage.local.set({ [PANEL_POSITION_KEY]: panelPosition });
+    setTimeout(() => { suppressNextClick = false; }, 0);
   }
 
   function formatLogTime(value) {
@@ -529,6 +613,7 @@
     shell.dataset.renderCount = String(state.renderCount);
     shell.dataset.expanded = String(state.expanded);
     shell.dataset.closing = String(state.panelClosing);
+    applyPanelPosition(shell);
     const compact = shell.querySelector(".compact");
     setClass(compact, `compact${state.compactNotice ? " has-notice" : ""}`);
     compact.setAttribute("aria-expanded", String(state.expanded));
@@ -573,6 +658,7 @@
     shell.querySelector('[data-action="scan-deep"]').disabled = scansDisabled;
     patchResultRows(shell);
     patchLogDialog(shell);
+    keepPanelOnScreen(shell);
   }
 
   function render() {
@@ -712,6 +798,11 @@
   }
 
   function handleClick(event) {
+    if (suppressNextClick) {
+      suppressNextClick = false;
+      event.preventDefault();
+      return;
+    }
     if (event.target?.matches?.('[data-bind="log-overlay"]')) {
       state.logsOpen = false;
       render();
@@ -981,9 +1072,11 @@
         --blue: #00aeec;
         --ink: #16171a;
         --muted: rgba(22, 23, 26, .58);
+        --panel-default-right: 22px;
+        --panel-default-bottom: 22px;
         position: fixed;
-        right: 22px;
-        bottom: 22px;
+        right: var(--panel-right, var(--panel-default-right));
+        bottom: var(--panel-bottom, var(--panel-default-bottom));
         z-index: 2147483000;
         width: min(372px, calc(100vw - 28px));
         font: 13px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", system-ui, sans-serif;
@@ -1010,7 +1103,9 @@
         box-shadow: 0 16px 38px rgba(115, 27, 66, .28), inset 0 1px 0 rgba(255,255,255,.38);
         backdrop-filter: blur(22px) saturate(180%);
         -webkit-backdrop-filter: blur(22px) saturate(180%);
-        cursor: pointer;
+        cursor: grab;
+        touch-action: none;
+        user-select: none;
         transform-origin: 100% 100%;
         transition:
           width 380ms cubic-bezier(.2,.8,.2,1),
@@ -1023,6 +1118,7 @@
       .compact.has-notice { width: 314px; height: 62px; }
       .compact:hover { filter: brightness(1.035); transform: translateY(-1px); }
       .compact:active { transform: scale(.97); transition-duration: 90ms; }
+      .shell[data-dragging="true"] .compact { cursor: grabbing; transform: none; transition: none; }
       .compact-mark, .brand-mark {
         display: grid;
         place-items: center;
@@ -1096,7 +1192,11 @@
         justify-content: space-between;
         flex: none;
         padding: 14px 14px 10px 16px;
+        cursor: grab;
+        touch-action: none;
+        user-select: none;
       }
+      .shell[data-dragging="true"] .panel-header { cursor: grabbing; }
       .panel-scroll {
         min-height: 0;
         overflow-x: hidden;
@@ -1259,7 +1359,7 @@
         .panel { background: Canvas; color: CanvasText; }
       }
       @media (max-width: 520px) {
-        .shell { right: 14px; bottom: 14px; }
+        .shell { --panel-default-right: 14px; --panel-default-bottom: 14px; }
         .panel { max-height: calc(100dvh - 16px); }
       }
     `;
@@ -1277,6 +1377,11 @@
     const shell = document.createElement("div");
     shell.className = "shell";
     shell.addEventListener("click", handleClick);
+    shell.addEventListener("pointerdown", handlePointerDown);
+    shell.addEventListener("pointermove", handlePointerMove);
+    shell.addEventListener("pointerup", handlePointerEnd);
+    shell.addEventListener("pointercancel", handlePointerEnd);
+    shell.addEventListener("lostpointercapture", handlePointerEnd);
     shell.addEventListener("keydown", (event) => {
       if (event.key !== "Escape" || !state.logsOpen) return;
       state.logsOpen = false;
@@ -1292,7 +1397,15 @@
   }
 
   window.addEventListener("message", handlePageMessage);
-  chrome.storage.local.get({ [STORAGE.UI_PREFETCH_ENABLED]: true }).then((stored) => {
+  window.addEventListener("resize", () => keepPanelOnScreen(shadow?.querySelector(".shell")));
+  chrome.storage.local.get({
+    [PANEL_POSITION_KEY]: null,
+    [STORAGE.UI_PREFETCH_ENABLED]: true
+  }).then((stored) => {
+    const savedPosition = stored[PANEL_POSITION_KEY];
+    if (Number.isFinite(savedPosition?.right) && Number.isFinite(savedPosition?.bottom)) {
+      panelPosition = savedPosition;
+    }
     state.prefetchEnabled = stored[STORAGE.UI_PREFETCH_ENABLED] === true;
     post(EVENTS.SET_PREFETCH, { enabled: state.prefetchEnabled });
     render();
