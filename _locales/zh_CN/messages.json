@@ -20,6 +20,30 @@
   "standby": {
     "message": "待命"
   },
+  "compactReadySegments": {
+    "message": "已预载 $VALUE_1$ 个分片",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "compactCdnSelected": {
+    "message": "正在使用 · $VALUE_1$",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "compactCdnPinned": {
+    "message": "已固定 · $VALUE_1$",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "compactSegmentCached": {
+    "message": "分片已预载 · $VALUE_1$",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
   "scanning": {
     "message": "扫描中"
   },
