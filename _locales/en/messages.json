@@ -20,6 +20,30 @@
   "standby": {
     "message": "Standby"
   },
+  "compactReadySegments": {
+    "message": "$VALUE_1$ prefetched segments",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "compactCdnSelected": {
+    "message": "Using · $VALUE_1$",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "compactCdnPinned": {
+    "message": "Pinned · $VALUE_1$",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "compactSegmentCached": {
+    "message": "Segment cached · $VALUE_1$",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
   "scanning": {
     "message": "Scanning"
   },

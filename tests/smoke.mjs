@@ -90,6 +90,8 @@ assert.doesNotMatch(pageHook, /BCO_ROUTE_ROLLBACK/);
 assert.doesNotMatch(pageHook, /JSON\.stringify\(payload\)/);
 assert.doesNotMatch(pageHook, /Object\.defineProperty\(XHR\.prototype/);
 assert.match(content, /STORAGE\.UI_PREFETCH_ENABLED/);
+assert.match(content, /\[STORAGE\.UI_PREFETCH_ENABLED\]: true/);
+assert.match(pageHook, /localStorage\.getItem\(PREFETCH_KEY\) !== "false"/);
 assert.match(content, /protocol\.post\(type, detail\)/);
 assert.match(uiModel, /measuredResults\[0\]\?\.score > -10000/);
 assert.match(uiModel, /initial-probe-failed.*Skipped/);

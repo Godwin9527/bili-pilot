@@ -18,18 +18,22 @@
   const activityEntries = [];
   const activityIds = new Set();
   const autoProbe = autoProbePolicy.createScheduler();
+  const COMPACT_NOTICE_MS = 5000;
+  const PANEL_CLOSE_MS = 220;
   const extensionVersion = chrome.runtime.getManifest().version;
   const state = {
+    compactNotice: "",
     contextInvalidated: false,
     expanded: false,
     mode: "quick",
     plan: null,
     prefetch: { backoff: 0, bytes: 0, circuitOpenInMs: 0, failed: 0, foreground: 0, hosts: {}, loading: 0, queued: 0, ready: 0, retrying: 0, segments: [] },
-    prefetchEnabled: false,
+    prefetchEnabled: true,
     results: [],
     renderCount: 0,
     scanning: false,
     logsOpen: false,
+    panelClosing: false,
     status: t("waitingForRoutes"),
     statusKind: "idle"
   };
@@ -38,6 +42,9 @@
   let monitoredVideo = null;
   let monitoredVideoProblemListener = null;
   let activitySequence = 0;
+  let compactNoticeTimer = 0;
+  let lastCompactNoticeKey = "";
+  let panelCloseTimer = 0;
   let probeSequence = 0;
   let renderFrame = 0;
   const pendingProbeRequests = new Map();
@@ -59,6 +66,49 @@
 
   function appendLog(type, detail = {}) {
     if (addActivity({ detail, type }) && state.logsOpen) render();
+  }
+
+  function clearCompactNotice() {
+    clearTimeout(compactNoticeTimer);
+    compactNoticeTimer = 0;
+    state.compactNotice = "";
+  }
+
+  function showCompactNotice(message, key, replaceActive = false) {
+    const text = String(message || "").trim();
+    if (!text || state.expanded || (key && key === lastCompactNoticeKey)) return;
+    if (state.compactNotice && !replaceActive) return;
+    clearTimeout(compactNoticeTimer);
+    lastCompactNoticeKey = String(key || "");
+    state.compactNotice = text;
+    compactNoticeTimer = setTimeout(() => {
+      compactNoticeTimer = 0;
+      state.compactNotice = "";
+      render();
+    }, COMPACT_NOTICE_MS);
+    render();
+  }
+
+  function openPanel() {
+    clearTimeout(panelCloseTimer);
+    panelCloseTimer = 0;
+    state.panelClosing = false;
+    state.expanded = true;
+    clearCompactNotice();
+    render();
+  }
+
+  function closePanel() {
+    if (!state.expanded || state.panelClosing) return;
+    state.panelClosing = true;
+    render();
+    const delay = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? 0 : PANEL_CLOSE_MS;
+    panelCloseTimer = setTimeout(() => {
+      panelCloseTimer = 0;
+      state.panelClosing = false;
+      state.expanded = false;
+      render();
+    }, delay);
   }
 
   function formatLogTime(value) {
@@ -193,11 +243,13 @@
     shell.innerHTML = `
       <button class="compact" data-action="expand" aria-label="${escapeHtml(t("expandPanel"))}" aria-expanded="false">
         <span class="compact-mark">↯</span>
-        <span class="compact-copy">
-          <strong>${escapeHtml(t("appName"))}</strong>
+        <span class="compact-copy" aria-live="polite">
+          <strong data-bind="compact-title">${escapeHtml(t("appName"))}</strong>
           <small data-bind="compact-status">${escapeHtml(t("standby"))}</small>
         </span>
-        <span class="compact-state idle"></span>
+        <span class="compact-dots" data-bind="compact-dots" role="img">
+          ${Array.from({ length: 8 }, () => "<i></i>").join("")}
+        </span>
       </button>
 
       <section class="panel" aria-label="${escapeHtml(t("appName"))}">
@@ -476,10 +528,24 @@
     state.renderCount += 1;
     shell.dataset.renderCount = String(state.renderCount);
     shell.dataset.expanded = String(state.expanded);
+    shell.dataset.closing = String(state.panelClosing);
     const compact = shell.querySelector(".compact");
+    setClass(compact, `compact${state.compactNotice ? " has-notice" : ""}`);
     compact.setAttribute("aria-expanded", String(state.expanded));
-    setText(shell.querySelector('[data-bind="compact-status"]'), state.scanning ? t("scanning") : state.results[0]?.label || t("standby"));
-    setClass(shell.querySelector(".compact-state"), `compact-state ${state.statusKind}`);
+    const compactHost = state.plan?.preferredHost || state.plan?.currentPrimary || "";
+    setText(shell.querySelector('[data-bind="compact-title"]'), state.compactNotice || t("appName"));
+    const compactStatus = shell.querySelector('[data-bind="compact-status"]');
+    setText(
+      compactStatus,
+      state.scanning ? t("scanning") : compactHost ? candidateLabel(compactHost) : t("standby")
+    );
+    compactStatus.hidden = Boolean(state.compactNotice);
+    const readyCount = state.prefetchEnabled
+      ? Math.min(8, state.prefetch.segments.filter((segment) => segment.state === "ready").length)
+      : 0;
+    const dots = shell.querySelector('[data-bind="compact-dots"]');
+    dots.setAttribute("aria-label", t("compactReadySegments", [readyCount]));
+    [...dots.children].forEach((dot, index) => setClass(dot, index < readyCount ? "ready" : ""));
     setText(shell.querySelector('[data-bind="quality-label"]'), state.plan?.qualityLabel || t("waitingForVideo"));
     setText(shell.querySelector('[data-bind="quality-summary"]'), qualitySummary(state.plan));
     setClass(shell.querySelector(".pulse-orbit"), `pulse-orbit${state.scanning ? " is-scanning" : ""}`);
@@ -670,8 +736,14 @@
       location.reload();
       return;
     }
-    if (action === "expand") state.expanded = true;
-    if (action === "collapse") state.expanded = false;
+    if (action === "expand") {
+      openPanel();
+      return;
+    }
+    if (action === "collapse") {
+      closePanel();
+      return;
+    }
     if (state.contextInvalidated) {
       render();
       return;
@@ -722,7 +794,6 @@
       if (isNew) autoProbe.reset(message.plan.signature);
       state.prefetchEnabled = message.plan.prefetchEnabled === true;
       state.results = isNew ? [] : state.results;
-      state.expanded = isNew ? true : state.expanded;
       if (state.scanning && !isNew) return;
       const recoveringFromStall = state.prefetchEnabled && autoProbe.isRecovering();
       state.statusKind = recoveringFromStall ? "warning" : message.plan.preferredHost ? "success" : "idle";
@@ -737,6 +808,8 @@
 
     if (message.type === EVENTS.PLAN_RESET) {
       autoProbe.reset();
+      clearCompactNotice();
+      lastCompactNoticeKey = "";
       state.plan = null;
       state.results = [];
       state.prefetch = { backoff: 0, bytes: 0, circuitOpenInMs: 0, failed: 0, foreground: 0, hosts: {}, loading: 0, queued: 0, ready: 0, retrying: 0, segments: [] };
@@ -756,6 +829,12 @@
       }
       state.statusKind = "success";
       state.status = t("selectedNextSegment", [selected?.label || message.host]);
+      const automaticallyPinned = String(message.reason || "").startsWith("automatic-");
+      showCompactNotice(
+        t(automaticallyPinned ? "compactCdnPinned" : "compactCdnSelected", [selected?.label || message.host]),
+        `route:${message.signature || state.plan?.signature || ""}:${message.host}:${automaticallyPinned ? "auto" : "manual"}`,
+        true
+      );
       render();
     }
 
@@ -799,6 +878,12 @@
           : result.retryExhausted
             ? t("allCdnsFailedTwice")
             : t("allCdnsFailedReprobe", [Math.max(1, Math.ceil(Number(result.reprobeInMs || 0) / 1000))]);
+        if (result.ok) {
+          showCompactNotice(
+            t("compactSegmentCached", [selected?.label || result.host || t("currentRoute")]),
+            `segment:${result.range || ""}:${result.host || ""}:${result.bytes || 0}`
+          );
+        }
       }
       render();
     }
@@ -907,13 +992,17 @@
         letter-spacing: 0;
       }
       .compact {
-        display: flex;
+        display: grid;
+        grid-template-columns: 38px minmax(0, 1fr) 34px;
+        grid-template-areas: "mark copy dots";
         align-items: center;
-        gap: 10px;
+        column-gap: 10px;
+        row-gap: 0;
         margin-left: auto;
         width: 176px;
-        min-height: 54px;
+        height: 54px;
         padding: 7px 12px 7px 8px;
+        overflow: hidden;
         border: 1px solid rgba(255,255,255,.56);
         border-radius: 18px;
         color: white;
@@ -922,8 +1011,16 @@
         backdrop-filter: blur(22px) saturate(180%);
         -webkit-backdrop-filter: blur(22px) saturate(180%);
         cursor: pointer;
-        transition: transform 160ms ease, opacity 220ms ease, filter 220ms ease;
+        transform-origin: 100% 100%;
+        transition:
+          width 380ms cubic-bezier(.2,.8,.2,1),
+          height 380ms cubic-bezier(.2,.8,.2,1),
+          transform 160ms ease,
+          opacity 220ms ease,
+          filter 220ms ease;
+        will-change: width, height;
       }
+      .compact.has-notice { width: 314px; height: 62px; }
       .compact:hover { filter: brightness(1.035); transform: translateY(-1px); }
       .compact:active { transform: scale(.97); transition-duration: 90ms; }
       .compact-mark, .brand-mark {
@@ -938,13 +1035,31 @@
         font-size: 21px;
         font-weight: 750;
       }
-      .compact-copy { display: grid; min-width: 0; text-align: left; }
+      .compact .compact-mark { grid-area: mark; }
+      .compact-copy { grid-area: copy; display: grid; min-width: 0; text-align: left; }
       .compact-copy strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; letter-spacing: -.01em; }
       .compact-copy small { opacity: .76; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .compact-state { width: 7px; height: 7px; margin-left: auto; border-radius: 50%; background: rgba(255,255,255,.6); box-shadow: 0 0 0 4px rgba(255,255,255,.12); }
-      .compact-state.success { background: #a7f3d0; }
-      .compact-state.warning { background: #fde68a; }
-      .compact-state.error { background: #fecaca; }
+      .compact-dots {
+        grid-area: dots;
+        display: grid;
+        grid-template-columns: repeat(4, 5px);
+        grid-auto-rows: 5px;
+        gap: 4px;
+        justify-content: end;
+      }
+      .compact-dots i {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.22);
+        transform: scale(.72);
+        transition: background 260ms ease, box-shadow 260ms ease, transform 260ms cubic-bezier(.2,.8,.2,1);
+      }
+      .compact-dots i.ready {
+        background: #d6ffe9;
+        box-shadow: 0 0 0 2px rgba(214,255,233,.12), 0 0 8px rgba(214,255,233,.45);
+        transform: scale(1);
+      }
       .panel {
         display: none;
         flex-direction: column;
@@ -959,11 +1074,21 @@
         transform-origin: 88% 100%;
         animation: materialize 320ms cubic-bezier(.2,.8,.2,1) both;
       }
+      .shell[data-expanded="false"] .compact { animation: compact-materialize 180ms cubic-bezier(.2,.8,.2,1) both; }
       .shell[data-expanded="true"] .compact { display: none; }
       .shell[data-expanded="true"] .panel { display: flex; }
+      .shell[data-closing="true"] .panel { pointer-events: none; animation: dematerialize ${PANEL_CLOSE_MS}ms cubic-bezier(.4,0,1,1) both; }
+      @keyframes compact-materialize {
+        from { opacity: 0; transform: scale(.94) translateY(5px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
       @keyframes materialize {
         from { opacity: 0; transform: scale(.94) translateY(10px); filter: blur(5px); }
         to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+      }
+      @keyframes dematerialize {
+        from { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        to { opacity: 0; transform: scale(.96) translateY(8px); filter: blur(4px); }
       }
       .panel-header {
         display: flex;
@@ -1167,7 +1292,7 @@
   }
 
   window.addEventListener("message", handlePageMessage);
-  chrome.storage.local.get({ [STORAGE.UI_PREFETCH_ENABLED]: false }).then((stored) => {
+  chrome.storage.local.get({ [STORAGE.UI_PREFETCH_ENABLED]: true }).then((stored) => {
     state.prefetchEnabled = stored[STORAGE.UI_PREFETCH_ENABLED] === true;
     post(EVENTS.SET_PREFETCH, { enabled: state.prefetchEnabled });
     render();

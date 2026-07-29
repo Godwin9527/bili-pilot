@@ -343,7 +343,7 @@
   }
 
   function prefetchEnabled() {
-    return localStorage.getItem(PREFETCH_KEY) === "true";
+    return localStorage.getItem(PREFETCH_KEY) !== "false";
   }
 
   function routeMatchesDecodedVideo(route) {
