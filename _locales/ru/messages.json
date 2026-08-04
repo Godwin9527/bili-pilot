@@ -1,0 +1,429 @@
+{
+  "extensionName": {
+    "message": "Bili Pilot"
+  },
+  "extensionDescription": {
+    "message": "Выберите CDN воспроизведения Bilibili и адаптивно предварительно загружайте будущие сегменты DASH, не мешая воспроизведению."
+  },
+  "appName": {
+    "message": "Bili Pilot"
+  },
+  "expandPanel": {
+    "message": "Развернуть Bili Pilot"
+  },
+  "collapsePanel": {
+    "message": "Свернуть Bili Pilot"
+  },
+  "tagline": {
+    "message": "Выберите стабильный маршрут для этого видео"
+  },
+  "standby": {
+    "message": "Ожидание"
+  },
+  "compactReadySegments": {
+    "message": "$VALUE_1$ предзагруженных сегментов",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "compactCdnSelected": {
+    "message": "Используется · $VALUE_1$",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "compactCdnPinned": {
+    "message": "Закреплён · $VALUE_1$",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "compactSegmentCached": {
+    "message": "Сегмент в кэше · $VALUE_1$",
+    "placeholders": {
+      "value_1": { "content": "$1" }
+    }
+  },
+  "scanning": {
+    "message": "Сканирование"
+  },
+  "currentQuality": {
+    "message": "Текущее качество / Защита от реальных сегментов"
+  },
+  "waitingForVideo": {
+    "message": "Ожидание видео"
+  },
+  "videoNotDetected": {
+    "message": "Видео пока не обнаружено"
+  },
+  "waitingForRoutes": {
+    "message": "Ожидание маршрутов CDN от проигрывателя…"
+  },
+  "reloadPage": {
+    "message": "Обновить страницу"
+  },
+  "automaticRoutingTitle": {
+    "message": "Автомаршрутизация + предзагрузка сегментов"
+  },
+  "activityLogs": {
+    "message": "Журнал активности Bili Pilot"
+  },
+  "checkLogs": {
+    "message": "Просмотр журнала"
+  },
+  "closeLogs": {
+    "message": "Закрыть журнал"
+  },
+  "noLogsYet": {
+    "message": "Активности Bili Pilot пока нет."
+  },
+  "activityScanStarted": { "message": "Сканирование начато" },
+  "activityScanFinished": { "message": "Сканирование завершено" },
+  "activityScanFailed": { "message": "Сканирование не удалось" },
+  "activityProbeStarted": {
+    "message": "Тестирование $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityProbeFinished": {
+    "message": "Тестирование $VALUE_1$ завершено",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteSelected": {
+    "message": "Маршрут воспроизведения изменён на $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteAvoided": {
+    "message": "Временное исключение $VALUE_1$",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRouteRescue": {
+    "message": "Использование $VALUE_1$ пока $VALUE_2$ восстанавливается",
+    "placeholders": { "value_1": { "content": "$1" }, "value_2": { "content": "$2" } }
+  },
+  "activityPrefetchEnabled": { "message": "Автоматическая маршрутизация и предзагрузка включены" },
+  "activityPrefetchDisabled": { "message": "Автоматическая маршрутизация и предзагрузка отключены" },
+  "activitySegmentsPlanned": {
+    "message": "$VALUE_1$ будущих сегментов поставлено в очередь",
+    "placeholders": { "value_1": { "content": "$1" } }
+  },
+  "activityRetrying": { "message": "Повторная попытка" },
+  "activityCancelled": { "message": "Отменено" },
+  "activitySegmentPrioritized": { "message": "Приоритет сегмента, запрошенного проигрывателем" },
+  "activityCacheDelivered": { "message": "Передан сегмент из кэша проигрывателю" },
+  "activityTransfer": {
+    "message": "$VALUE_1$ МБ за $VALUE_2$ мс",
+    "placeholders": { "value_1": { "content": "$1" }, "value_2": { "content": "$2" } }
+  },
+  "futureSegmentLifecycle": {
+    "message": "Жизненный цикл будущих сегментов"
+  },
+  "candidateCdns": {
+    "message": "Кандидаты CDN"
+  },
+  "routeCount": {
+    "message": "$VALUE_1$ маршрутов",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "quickScan": {
+    "message": "Быстрое сканирование"
+  },
+  "deepScan": {
+    "message": "Глубокое сканирование"
+  },
+  "footer": {
+    "message": "Выберите стабильный основной маршрут; предзагружайте каждый будущий сегмент с его самого быстрого CDN / вер.$VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "reprobeSeconds": {
+    "message": "Перетестировать через $VALUE_1$ с.",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "unavailable": {
+    "message": "Недоступно"
+  },
+  "foreground": {
+    "message": "На переднем плане"
+  },
+  "downloading": {
+    "message": "Скачивание"
+  },
+  "planned": {
+    "message": "Запланировано"
+  },
+  "ready": {
+    "message": "Готово"
+  },
+  "retryProgress": {
+    "message": "Попытка $VALUE_1$/$VALUE_2$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "pending": {
+    "message": "Ожидание"
+  },
+  "selected": {
+    "message": "Выбрано"
+  },
+  "bilibiliDefault": {
+    "message": "По умолчанию Bilibili"
+  },
+  "leading": {
+    "message": "Лидирующий"
+  },
+  "mostStable": {
+    "message": "Самый стабильный"
+  },
+  "pinned": {
+    "message": "Закреплён"
+  },
+  "use": {
+    "message": "Использовать"
+  },
+  "floorSpeed": {
+    "message": "Нижняя граница $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "waitingForScan": {
+    "message": "Ожидание сканирования"
+  },
+  "failureCount": {
+    "message": "$VALUE_1$ сбоев",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "openVideo": {
+    "message": "Откройте видео на Bilibili, чтобы обнаружить доступные маршруты CDN."
+  },
+  "ttfbTitle": {
+    "message": "$VALUE_1$ мс TTFB",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "failureRangeUnavailable": {
+    "message": "Диапазон недоступен"
+  },
+  "failureNetwork": {
+    "message": "Сетевая ошибка"
+  },
+  "failureSkipped": {
+    "message": "Пропущено"
+  },
+  "failureStoppedEarly": {
+    "message": "Остановлено досрочно"
+  },
+  "failurePositionUnavailable": {
+    "message": "Позиция недоступна"
+  },
+  "failureTimedOut": {
+    "message": "Время ожидания превышено"
+  },
+  "failureGeneric": {
+    "message": "Не удалось"
+  },
+  "pageProbeTimedOut": {
+    "message": "Истекло время ожидания проверки на странице"
+  },
+  "extensionUpdated": {
+    "message": "Расширение было обновлено. Перезагрузите страницу перед повторным сканированием."
+  },
+  "noRoutesToCompare": {
+    "message": "Нет доступных маршрутов CDN для сравнения"
+  },
+  "scanningDeep": {
+    "message": "Последовательная проверка начала и трёх более поздних позиций на каждом CDN…"
+  },
+  "scanningAutomatic": {
+    "message": "Буфер воспроизведения достаточен; автоматическое сравнение основных маршрутов…"
+  },
+  "scanningQuick": {
+    "message": "Последовательное сравнение начала и середины на каждом CDN…"
+  },
+  "activeTrackChanged": {
+    "message": "Активный трек изменён; результаты предыдущего трека проигнорированы"
+  },
+  "everyRouteFailed": {
+    "message": "Все маршруты-кандидаты не прошли сканирование"
+  },
+  "winnerHasFailures": {
+    "message": "$VALUE_1$ лидирует, но некоторые проверенные диапазоны всё ещё не отвечают",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bestRouteTooSlow": {
+    "message": "Лучший маршрут показал только $VALUE_1$, что может не обеспечить $VALUE_2$. Рассмотрите снижение качества.",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "winnerStable": {
+    "message": "$VALUE_1$ является наиболее стабильным с нижней границей $VALUE_2$. Нажмите «Использовать» для переключения.",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "automaticallyPinned": {
+    "message": "$VALUE_1$ автоматически закреплён как стабильный основной маршрут; будущие сегменты продолжат предзагрузку",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "candidatesTooClose": {
+    "message": "Кандидаты слишком близки по показателям; текущий маршрут оставлен, чтобы избежать частых переключений"
+  },
+  "scanFailed": {
+    "message": "Сканирование не удалось: $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "automaticRouteQueued": {
+    "message": "Автоматически выбран более стабильный маршрут; переключение на следующем сегменте…"
+  },
+  "manualRouteQueued": {
+    "message": "Смена маршрута поставлена в очередь; переключение на следующем сегменте…"
+  },
+  "prefetchEnabled": {
+    "message": "Автоматическая маршрутизация включена: при достаточном буфере выбирается стабильный основной маршрут, затем сегменты предзагружаются по одному"
+  },
+  "prefetchDisabled": {
+    "message": "Предзагрузка будущих сегментов отключена; плеер продолжит использовать выбранный CDN напрямую"
+  },
+  "pageProbeNoResult": {
+    "message": "Проверка на странице не дала результата"
+  },
+  "playbackStalling": {
+    "message": "Воспроизведение зависает; выполняется повторная проверка доступных маршрутов CDN"
+  },
+  "pinnedTo": {
+    "message": "Закреплён на $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "foundRoutes": {
+    "message": "Найдено $VALUE_1$ тестируемых маршрутов",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "discoveringNewVideo": {
+    "message": "Поиск маршрутов для нового видео…"
+  },
+  "selectedNextSegment": {
+    "message": "$VALUE_1$ выбран; он будет использован начиная со следующего сегмента без прерывания текущего запроса",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "playerRangeTimedOut": {
+    "message": "Превышено время ожидания запроса диапазона проигрывателя на $VALUE_1$; следующая попытка будет использовать другой доступный маршрут",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "playerRangeNetworkFailure": {
+    "message": "Сетевая ошибка на $VALUE_1$ при текущем запросе диапазона проигрывателя; следующая попытка будет использовать другой доступный маршрут",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "prefetchUnavailable": {
+    "message": "Предзагрузка временно недоступна: $VALUE_1$",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "cacheHit": {
+    "message": "Проигрыватель обратился к предзагруженному кэшу; $VALUE_1$ МБ передано немедленно",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "futureSegmentCached": {
+    "message": "Будущий сегмент в кэше: $VALUE_1$ / $VALUE_2$ МБ",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      },
+      "value_2": {
+        "content": "$2"
+      }
+    }
+  },
+  "currentRoute": {
+    "message": "текущий маршрут"
+  },
+  "allCdnsFailedTwice": {
+    "message": "Все доступные CDN дважды не смогли загрузить этот сегмент; он помещён на карантин, чтобы сохранить сеть для воспроизведения"
+  },
+  "allCdnsFailedReprobe": {
+    "message": "Все протестированные CDN не смогли загрузить этот сегмент; повторное тестирование через $VALUE_1$ с.",
+    "placeholders": {
+      "value_1": {
+        "content": "$1"
+      }
+    }
+  },
+  "stallDetected": {
+    "message": "Обнаружена задержка воспроизведения; повторная проверка доступных маршрутов CDN"
+  }
+}
