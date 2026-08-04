@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "check": "node --check protocol.js && node --check page-protocol.js && node --check i18n.js && node --check ui-model.js && node --check auto-probe-policy.js && node --check core.js && node --check probe-core.js && node --check prefetch-store.js && node --check prefetch-policy.js && node --check prefetch-runtime.js && node --check cached-xhr.js && node --check page-hook.js && node --check content.js && node tests/smoke.mjs && node --test tests/no-han.test.mjs",
-    "package": "bash scripts/package-release.sh",
+    "package": "npm run package:chrome",
+    "package:chrome": "bash scripts/package-release.sh chrome",
+    "package:firefox": "bash scripts/package-release.sh firefox",
     "test": "node --test tests/*.test.mjs"
   }
 }

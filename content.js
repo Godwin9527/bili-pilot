@@ -5,7 +5,8 @@
   const i18n = globalThis.BiliCdnI18n;
   const uiModel = globalThis.BiliCdnUiModel;
   const autoProbePolicy = globalThis.BiliCdnAutoProbePolicy;
-  if (!protocol || !i18n || !uiModel || !autoProbePolicy) return;
+  const extensionApi = globalThis.browser ?? globalThis.chrome;
+  if (!protocol || !i18n || !uiModel || !autoProbePolicy || !extensionApi) return;
   const { EVENTS, STORAGE } = protocol;
   const { locale, t } = i18n;
   const {
@@ -23,7 +24,7 @@
   const DRAG_THRESHOLD = 4;
   const PANEL_CLOSE_MS = 220;
   const PANEL_POSITION_KEY = "panelPositionV1";
-  const extensionVersion = chrome.runtime.getManifest().version;
+  const extensionVersion = extensionApi.runtime.getManifest().version;
   const state = {
     compactNotice: "",
     contextInvalidated: false,
@@ -162,7 +163,6 @@
       x: event.clientX,
       y: event.clientY
     };
-    shell.setPointerCapture(event.pointerId);
   }
 
   function handlePointerMove(event) {
@@ -170,7 +170,10 @@
     const deltaX = event.clientX - dragState.x;
     const deltaY = event.clientY - dragState.y;
     if (!dragState.moved && Math.hypot(deltaX, deltaY) < DRAG_THRESHOLD) return;
-    dragState.moved = true;
+    if (!dragState.moved) {
+      dragState.moved = true;
+      dragState.shell.setPointerCapture(event.pointerId);
+    }
     event.preventDefault();
     dragState.shell.dataset.dragging = "true";
     const { start } = dragState;
@@ -191,7 +194,7 @@
     if (shell.hasPointerCapture(event.pointerId)) shell.releasePointerCapture(event.pointerId);
     if (!moved) return;
     suppressNextClick = true;
-    chrome.storage.local.set({ [PANEL_POSITION_KEY]: panelPosition });
+    extensionApi.storage.local.set({ [PANEL_POSITION_KEY]: panelPosition });
     setTimeout(() => { suppressNextClick = false; }, 0);
   }
 
@@ -846,7 +849,7 @@
       state.prefetchEnabled = !state.prefetchEnabled;
       autoProbe.reset(state.prefetchEnabled ? state.plan?.signature : "");
       appendLog("prefetch-toggle", { enabled: state.prefetchEnabled });
-      chrome.storage.local.set({ [STORAGE.UI_PREFETCH_ENABLED]: state.prefetchEnabled });
+      extensionApi.storage.local.set({ [STORAGE.UI_PREFETCH_ENABLED]: state.prefetchEnabled });
       post(EVENTS.SET_PREFETCH, { enabled: state.prefetchEnabled });
       state.statusKind = state.prefetchEnabled ? "success" : "idle";
       state.status = state.prefetchEnabled
@@ -1398,7 +1401,7 @@
 
   window.addEventListener("message", handlePageMessage);
   window.addEventListener("resize", () => keepPanelOnScreen(shadow?.querySelector(".shell")));
-  chrome.storage.local.get({
+  extensionApi.storage.local.get({
     [PANEL_POSITION_KEY]: null,
     [STORAGE.UI_PREFETCH_ENABLED]: true
   }).then((stored) => {

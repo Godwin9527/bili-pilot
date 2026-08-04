@@ -36,3 +36,28 @@ test("page and isolated-world protocol adapters stay identical", async () => {
   assert.deepEqual({ ...page.EVENTS }, { ...isolated.EVENTS });
   assert.deepEqual({ ...page.STORAGE }, { ...isolated.STORAGE });
 });
+
+test("protocol accepts same-origin messages across wrapped window realms", async () => {
+  const context = vm.createContext({
+    location: { origin: "https://www.bilibili.com" },
+    postMessage() {}
+  });
+  vm.runInContext(await readFile(new URL("../protocol.js", import.meta.url), "utf8"), context);
+  const message = context.BiliCdnProtocol.createMessage(context.BiliCdnProtocol.EVENTS.HOOK_READY);
+
+  assert.equal(context.BiliCdnProtocol.isProtocolMessage({
+    data: message,
+    origin: "https://www.bilibili.com",
+    source: {}
+  }), true);
+  assert.equal(context.BiliCdnProtocol.isProtocolMessage({
+    data: message,
+    origin: "https://example.com",
+    source: context
+  }), false);
+  assert.equal(context.BiliCdnProtocol.isProtocolMessage({
+    data: { ...message, type: "BCO_UNKNOWN" },
+    origin: "https://www.bilibili.com",
+    source: context
+  }), false);
+});

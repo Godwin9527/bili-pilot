@@ -2,7 +2,7 @@
 
 **English** | [Simplified Chinese](README.zh-CN.md)
 
-Bili Pilot is an experimental Chrome extension that helps stabilize high-bitrate Bilibili playback. It compares the signed CDN routes Bilibili already provides, supports manual route selection, and can pre-cache upcoming DASH segments from the best available route for each segment.
+Bili Pilot is an experimental Chrome and Firefox extension that helps stabilize high-bitrate Bilibili playback. It compares the signed CDN routes Bilibili already provides, supports manual route selection, and can pre-cache upcoming DASH segments from the best available route for each segment.
 
 > Bili Pilot is an independent community project. It is not affiliated with or endorsed by Bilibili.
 
@@ -16,11 +16,11 @@ This launch image uses a Retina capture from a real 4K HDR playback test. It sho
 
 ## Install
 
-Bili Pilot currently ships as an unpacked Chrome extension. It works on desktop Chrome for macOS, Windows, and Linux. Firefox, Safari, mobile browsers, and the Chrome Web Store are not supported yet.
+Bili Pilot works on desktop Chrome 111+ and Firefox 140+ for macOS, Windows, and Linux. Safari, mobile browsers, and browser extension stores are not supported yet.
 
-### From a release package
+### Chrome: from a release package
 
-1. Download the latest `Bili-Pilot-x.y.z.zip` from the repository's [Releases](../../releases/latest) page.
+1. Download the latest `Bili-Pilot-Chrome-x.y.z.zip` from the repository's [Releases](../../releases/latest) page.
 2. Extract the ZIP file. Do not select the ZIP itself in Chrome.
 3. Open `chrome://extensions`.
 4. Enable **Developer mode** in the top-right corner.
@@ -30,11 +30,31 @@ Bili Pilot currently ships as an unpacked Chrome extension. It works on desktop 
 
 Chrome may show a developer-mode warning after restart because this is not a Chrome Web Store installation. The extension must be reloaded from `chrome://extensions` after updating its files.
 
-### From source
+### Chrome: from source
 
 Use GitHub's **Code → Download ZIP** action or clone the repository, then load the repository folder containing `manifest.json` with the same steps above.
 
 There is no build step and no runtime dependency. `npm install` is not required to use the extension.
+
+### Firefox: from a signed release
+
+1. Download `Bili-Pilot-Firefox-x.y.z.xpi` from the repository's [Releases](../../releases/latest) page.
+2. Open the downloaded XPI in Firefox and approve the installation.
+3. Open or reload a Bilibili video page.
+
+The Firefox artifact is signed by Mozilla. The Chrome ZIP is not a Firefox installer.
+
+### Firefox: temporary source install
+
+Developers can also test the same source build as a temporary extension:
+
+1. Download or clone the repository.
+2. Open `about:debugging#/runtime/this-firefox` in Firefox 140 or newer.
+3. Select **Load Temporary Add-on**.
+4. Select the repository's `manifest.json`.
+5. Open or reload a Bilibili video page.
+
+Firefox removes temporary extensions when the browser exits. A normal persistent Firefox installation requires an XPI signed by Mozilla.
 
 ## Quick start
 
@@ -57,7 +77,7 @@ There is no build step and no runtime dependency. `npm install` is not required 
 - **Player-first scheduling:** safe buffered headroom admits one low-priority background transfer; dropping below 15 seconds cancels it. Pausing playback does not discard existing headroom.
 - **Fail-open delivery:** cached bytes are returned only for complete Range coverage; every uncertain case uses Bilibili's original request.
 - **Local and private:** no account service, remote backend, analytics, or telemetry.
-- **Localized UI:** English, Simplified Chinese, and Traditional Chinese follow Chrome's UI language automatically.
+- **Localized UI:** English, Simplified Chinese, and Traditional Chinese follow the browser's UI language automatically.
 
 ## How it works
 

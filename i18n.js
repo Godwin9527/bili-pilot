@@ -1,6 +1,8 @@
 (function installBiliCdnI18n(root) {
   "use strict";
 
+  const extensionApi = root.browser ?? root.chrome;
+
   const english = Object.freeze({
     appName: "Bili Pilot",
     expandPanel: "Expand Bili Pilot",
@@ -113,7 +115,7 @@
   function t(key, substitutions = []) {
     const values = (Array.isArray(substitutions) ? substitutions : [substitutions]).map(String);
     try {
-      const localized = root.chrome?.i18n?.getMessage?.(key, values);
+      const localized = extensionApi?.i18n?.getMessage?.(key, values);
       if (localized) return localized;
     } catch {
       // Use the bundled English fallback in previews and tests.
@@ -123,7 +125,7 @@
 
   const locale = (() => {
     try {
-      return root.chrome?.i18n?.getUILanguage?.() || "en";
+      return extensionApi?.i18n?.getUILanguage?.() || "en";
     } catch {
       return "en";
     }

@@ -54,7 +54,7 @@ flowchart TD
 | --- | --- | --- |
 | `protocol.js` | Message names, channel, storage keys, validation, and posting in the isolated world | Routing decisions, page state, UI |
 | `page-protocol.js` | Equivalent protocol adapter in the main world | Request rewriting or business state; tests lock it to `protocol.js` |
-| `i18n.js` and `_locales/` | Chrome UI-language detection, message substitutions, English fallback, and localized manifest metadata | Routing, media state, or DOM ownership |
+| `i18n.js` and `_locales/` | WebExtension UI-language detection, message substitutions, English fallback, and localized manifest metadata | Routing, media state, or DOM ownership |
 | `core.js` | playurl/DASH parsing, active-track identification, complete signed URLs, pure route-risk classification, Range math, `sidx` parsing, route scoring | Network requests, DOM, runtime state |
 | `probe-core.js` | Quick/deep scans, `sidx` reads, per-segment CDN comparison | Prefetch admission or cached bytes |
 | `auto-probe-policy.js` | Pure initial, periodic, and playback-recovery probe scheduling with exponential backoff | Route scoring, network requests, or UI |
@@ -63,7 +63,7 @@ flowchart TD
 | `prefetch-runtime.js` | Prefetch window, queue, arbitrary-length ranked CDN retry, re-probe backoff, foreground promotion, and download lifecycle | Track discovery, Fetch/XHR rewriting, UI rendering |
 | `cached-xhr.js` | Browser-compatible XHR delivery for a ready Range or a promoted in-flight Range | Cache planning and policy |
 | `page-hook.js` | playurl/resource observation, active track, Fetch/XHR installation, routing, runtime coordination | Prefetch queue internals or UI view models |
-| `ui-model.js` | Speed, error, and quality formatting; stable keyed CDN-row models | DOM, Chrome APIs, page communication |
+| `ui-model.js` | Speed, error, and quality formatting; stable keyed CDN-row models | DOM, WebExtension APIs, page communication |
 | `content.js` | UI state, scan interaction, automatic scan trigger, stable incremental DOM updates, and a bounded in-memory activity view | Media request interception, cached media bytes, persistent logs, or low-level network debugging |
 
 ## Two execution worlds
@@ -71,9 +71,9 @@ flowchart TD
 Manifest V3 installs code into two isolated environments:
 
 - The `MAIN` world shares Bilibili's JavaScript environment and can observe `window.__playinfo__`, Fetch, XHR, and media events.
-- The `ISOLATED` world owns the extension UI and can use `chrome.storage` without exposing its variables to page scripts.
+- The `ISOLATED` world owns the extension UI and can use WebExtension storage without exposing its variables to page scripts.
 
-The worlds communicate only through one `window.postMessage` contract. Chrome can deduplicate the same content-script resource across execution worlds, so the main world loads `page-protocol.js` and the isolated world loads `protocol.js`. `protocol.test.mjs` verifies that their channel, event names, and storage keys remain identical. Business modules must not duplicate these protocol strings.
+The worlds communicate only through one same-origin `window.postMessage` contract. Chromium can deduplicate the same content-script resource across execution worlds, so the main world loads `page-protocol.js` and the isolated world loads `protocol.js`. Firefox wraps the page window differently in each world, so protocol validation uses the origin, private channel, and known event type instead of JavaScript object identity. `protocol.test.mjs` verifies that the adapters remain compatible. Business modules must not duplicate these protocol strings.
 
 ## Primary data flows
 

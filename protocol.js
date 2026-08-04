@@ -33,9 +33,9 @@
 
   function isProtocolMessage(event) {
     return Boolean(
-      event?.source === root &&
       event?.origin === root.location?.origin &&
-      event?.data?.channel === CHANNEL
+      event?.data?.channel === CHANNEL &&
+      Object.values(EVENTS).includes(event?.data?.type)
     );
   }
 

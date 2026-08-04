@@ -2,7 +2,7 @@
 
 [English](README.md) | **简体中文**
 
-Bili Pilot 是一个实验性的 Chrome 扩展，用于提升哔哩哔哩高码率视频的播放稳定性。它比较哔哩哔哩已经提供的签名 CDN 线路，支持手动选线，也可以从每个未来 DASH 分片当时表现最好的线路进行预缓存。
+Bili Pilot 是一个实验性的 Chrome 与 Firefox 扩展，用于提升哔哩哔哩高码率视频的播放稳定性。它比较哔哩哔哩已经提供的签名 CDN 线路，支持手动选线，也可以从每个未来 DASH 分片当时表现最好的线路进行预缓存。
 
 > Bili Pilot 是独立的社区项目，与哔哩哔哩没有隶属或官方合作关系。
 
@@ -16,11 +16,11 @@ Bili Pilot 是一个实验性的 Chrome 扩展，用于提升哔哩哔哩高码�
 
 ## 安装
 
-Bili Pilot 目前以 Chrome 未打包扩展的方式提供，支持 macOS、Windows 和 Linux 上的桌面版 Chrome。暂不支持 Firefox、Safari、移动浏览器和 Chrome 应用商店安装。
+Bili Pilot 支持 macOS、Windows 和 Linux 上的桌面版 Chrome 111+ 与 Firefox 140+。暂不支持 Safari、移动浏览器和浏览器扩展商店安装。
 
-### 使用 Release 安装包
+### Chrome：使用 Release 安装包
 
-1. 从仓库的 [Releases](../../releases/latest) 页面下载最新的 `Bili-Pilot-x.y.z.zip`。
+1. 从仓库的 [Releases](../../releases/latest) 页面下载最新的 `Bili-Pilot-Chrome-x.y.z.zip`。
 2. 解压 ZIP 文件。不要在 Chrome 中直接选择 ZIP 文件。
 3. 打开 `chrome://extensions`。
 4. 开启右上角的**开发者模式**。
@@ -30,11 +30,31 @@ Bili Pilot 目前以 Chrome 未打包扩展的方式提供，支持 macOS、Wind
 
 由于当前版本不是通过 Chrome 应用商店安装，Chrome 重启后可能显示开发者模式提示。更新扩展文件后，需要在 `chrome://extensions` 重新加载扩展。
 
-### 从源码安装
+### Chrome：从源码安装
 
 使用 GitHub 的 **Code → Download ZIP** 下载源码，或者克隆仓库，然后按照上面的步骤加载包含 `manifest.json` 的仓库目录。
 
 安装和使用扩展不需要构建，也不需要运行 `npm install`。仓库中的 JavaScript 文件就是扩展本身。
+
+### Firefox：使用签名安装包
+
+1. 从仓库的 [Releases](../../releases/latest) 页面下载 `Bili-Pilot-Firefox-x.y.z.xpi`。
+2. 使用 Firefox 打开下载的 XPI，并确认安装。
+3. 打开或重新加载哔哩哔哩视频页面。
+
+Firefox 安装包经过 Mozilla 签名。Chrome ZIP 不能作为 Firefox 安装包使用。
+
+### Firefox：临时加载源码
+
+开发者也可以临时加载同一份源码进行测试：
+
+1. 下载或克隆仓库。
+2. 使用 Firefox 140 或更新版本打开 `about:debugging#/runtime/this-firefox`。
+3. 点击**临时载入附加组件**。
+4. 选择仓库根目录中的 `manifest.json`。
+5. 打开或重新加载哔哩哔哩视频页面。
+
+Firefox 退出后会移除临时扩展。正常的持久安装需要经过 Mozilla 签名的 XPI。
 
 ## 快速开始
 
@@ -57,7 +77,7 @@ Bili Pilot 目前以 Chrome 未打包扩展的方式提供，支持 macOS、Wind
 - **播放优先：**存在安全缓冲时只允许一个低优先级后台传输；缓冲低于 15 秒就立即取消。暂停播放不会浪费已经建立的安全缓冲。
 - **安全回退：**只有完整覆盖 Range 时才返回缓存；任何不确定情况都使用哔哩哔哩原生请求。
 - **本地与隐私：**没有账户服务、远程后端、分析或遥测。
-- **自动本地化：**英文、简体中文和繁体中文会跟随 Chrome 界面语言自动切换。
+- **自动本地化：**英文、简体中文和繁体中文会跟随浏览器界面语言自动切换。
 
 ## 工作原理
 
