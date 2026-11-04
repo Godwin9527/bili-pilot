@@ -9,7 +9,7 @@ Bili Pilot is an experimental Chrome and Firefox extension that helps stabilize 
 ## Preview
 
 <p align="center">
-  <a href="docs/images/bili-pilot-x-launch.png"><img src="docs/images/bili-pilot-x-launch.png" width="960" alt="Bili Pilot pre-caching future DASH segments during a real 4K HDR playback test"></a>
+  <a href="docs/images/bili-pilot-popup.png"><img src="docs/images/bili-pilot-popup.png" width="420" alt="Bili Pilot popup showing the active quality, future-segment pre-cache state, and ranked CDN candidates"></a>
 </p>
 
 This launch image uses a Retina capture from a real 4K HDR playback test. It shows Bili Pilot comparing Bilibili-provided CDN routes and caching future DASH segments beyond the player's existing buffer.
@@ -121,7 +121,7 @@ Signed URLs are used only for local Range requests. Bili Pilot does not collect 
 
 Reload the Bilibili tab so the content script can attach, then reopen the popup. After reloading the extension on `chrome://extensions` every existing tab must be reloaded once.
 
-### The panel keeps waiting for a video
+### The popup keeps waiting for a video
 
 Start playback and wait for a media request. Bili Pilot waits for evidence of the active track instead of guessing from inactive playurl representations.
 

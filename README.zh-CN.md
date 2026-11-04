@@ -9,7 +9,7 @@ Bili Pilot 是一个实验性的 Chrome 与 Firefox 扩展，用于提升哔哩�
 ## 运行预览
 
 <p align="center">
-  <a href="docs/images/bili-pilot-x-launch.png"><img src="docs/images/bili-pilot-x-launch.png" width="960" alt="Bili Pilot 在真实 4K HDR 播放测试中预缓存未来 DASH 分片"></a>
+  <a href="docs/images/bili-pilot-popup.png"><img src="docs/images/bili-pilot-popup.png" width="420" alt="Bili Pilot 弹窗显示当前画质、未来分片预缓存状态与 CDN 候选排序"></a>
 </p>
 
 这张宣传图使用真实 4K HDR 播放测试的 Retina 截图，展示 Bili Pilot 比较哔哩哔哩提供的 CDN 线路，并在播放器已有缓冲区之外继续预缓存未来 DASH 分片。
@@ -121,7 +121,7 @@ Bili Pilot 只申请：
 
 确认扩展已启用，在 `chrome://extensions` 重新加载扩展，然后重新加载哔哩哔哩页面。
 
-### 面板一直等待视频
+### 弹窗一直等待视频
 
 开始播放并等待媒体请求出现。Bili Pilot 会等待当前轨道的真实证据，不会根据未播放的 playurl 表示进行猜测。
 
