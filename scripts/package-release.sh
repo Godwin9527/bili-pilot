@@ -42,6 +42,9 @@ runtime_files=(
   manifest.json
   page-hook.js
   page-protocol.js
+  popup.css
+  popup.html
+  popup.js
   prefetch-policy.js
   prefetch-runtime.js
   prefetch-store.js

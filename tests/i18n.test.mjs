@@ -80,6 +80,7 @@ test("every runtime translation key exists in the locale contract", async () => 
   const english = await readMessages("en");
   const sources = await Promise.all([
     readFile(resolve(root, "content.js"), "utf8"),
+    readFile(resolve(root, "popup.js"), "utf8"),
     readFile(resolve(root, "ui-model.js"), "utf8")
   ]);
   const keys = new Set();

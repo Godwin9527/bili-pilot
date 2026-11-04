@@ -22,7 +22,7 @@ async function collectTextFiles(directory) {
 test("Han characters stay inside Chinese locale and documentation files", async () => {
   const violations = [];
   for (const file of await collectTextFiles(root)) {
-    const repositoryPath = relative(root, file);
+    const repositoryPath = relative(root, file).replaceAll("\\", "/");
     if (repositoryPath === "README.zh-CN.md" || repositoryPath.startsWith("_locales/zh_")) continue;
     const lines = (await readFile(file, "utf8")).split(/\r?\n/);
     lines.forEach((line, index) => {

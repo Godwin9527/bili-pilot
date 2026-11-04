@@ -251,6 +251,9 @@
   "pageProbeTimedOut": {
     "message": "页面侧测速超时"
   },
+  "popupConnectFailed": {
+    "message": "Bili Pilot 尚未连接到此标签页，请重新加载页面后再打开。"
+  },
   "extensionUpdated": {
     "message": "扩展已更新。请重新加载此页面后再测速。"
   },

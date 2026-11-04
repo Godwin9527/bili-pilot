@@ -20,6 +20,7 @@
     "storage"
   ],
   "host_permissions": [
+    "https://www.bilibili.com/*",
     "https://*.bilivideo.com/*",
     "https://*.bilivideo.cn/*",
     "https://*.akamaized.net/*",
@@ -59,6 +60,7 @@
     }
   ],
   "action": {
+    "default_popup": "popup.html",
     "default_title": "__MSG_extensionName__"
   }
 }

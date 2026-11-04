@@ -74,6 +74,7 @@
     failureGeneric: "Failed",
     pageProbeTimedOut: "Page-side probe timed out",
     extensionUpdated: "The extension was updated. Reload this page before scanning again.",
+    popupConnectFailed: "Bili Pilot is not connected to this tab yet. Reload the page and try again.",
     noRoutesToCompare: "No CDN routes are available for comparison",
     scanningDeep: "Sequentially checking the beginning and three later positions on each CDN…",
     scanningAutomatic: "Playback has enough buffer; automatically comparing primary routes…",

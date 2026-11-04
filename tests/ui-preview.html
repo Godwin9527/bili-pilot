@@ -3,29 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bili Pilot UI Preview</title>
+  <title>Bili Pilot Popup Preview</title>
+  <link rel="stylesheet" href="../popup.css">
   <style>
-    html, body { min-height: 100%; margin: 0; }
-    body {
-      background:
-        linear-gradient(rgba(14, 17, 23, .18), rgba(14, 17, 23, .48)),
-        radial-gradient(circle at 28% 18%, #fb7299 0, transparent 28%),
-        linear-gradient(135deg, #252a35, #111318 68%);
-      font-family: system-ui, sans-serif;
+    html { background: #2a2b31; }
+    body { margin: 0; }
+    .preview-stage {
+      display: grid;
+      place-items: start center;
+      padding: 0;
+      background: #2a2b31;
     }
-    .mock-video { position: fixed; inset: 6vh 7vw; border-radius: 24px; background: linear-gradient(145deg, rgba(255,255,255,.10), rgba(255,255,255,.02)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
-    .mock-video::after { content: "BILIBILI / 4K HDR"; position: absolute; left: 28px; bottom: 24px; color: rgba(255,255,255,.52); font: 600 12px/1 system-ui; letter-spacing: .12em; }
   </style>
 </head>
 <body>
-  <div class="mock-video"></div>
+  <div class="preview-stage" id="stage">
+    <div class="shell" id="shell"></div>
+  </div>
   <script>
     const previewLocale = new URLSearchParams(location.search).get("locale") || "en";
-    const localeRequest = new XMLHttpRequest();
-    localeRequest.open("GET", `../_locales/${previewLocale}/messages.json`, false);
-    localeRequest.send();
-    const previewMessages = JSON.parse(localeRequest.responseText);
-    window.chrome = {
+    let previewMessages = {};
+    try {
+      const localeRequest = new XMLHttpRequest();
+      localeRequest.open("GET", `../_locales/${previewLocale}/messages.json`, false);
+      localeRequest.send();
+      previewMessages = JSON.parse(localeRequest.responseText);
+    } catch {
+      // file:// previews cannot read sibling files; fall back to the bundled English strings.
+      previewMessages = {};
+    }
+    let popupListener = null;
+    function emit(snapshot) {
+      if (popupListener) popupListener(snapshot);
+      else setTimeout(() => emit(snapshot), 40);
+    }
+    const mockApi = {
       i18n: {
         getMessage(key, substitutions = []) {
           const values = Array.isArray(substitutions) ? substitutions : [substitutions];
@@ -38,113 +50,108 @@
         },
         getUILanguage: () => previewLocale.replace("_", "-")
       },
-      storage: { local: { get: async () => ({ prefetchEnabledV1: true }), set: async () => {} } },
-      runtime: {
-        getManifest: () => ({ version: "0.1.3" }),
-        sendMessage: async () => ({
-          results: [
-            {
-              host: "upos-hz-mirrorakam.akamaized.net",
-              label: "Akamai",
-              minMbps: 51.6,
-              failures: 0,
-              score: 71,
-              samples: [
-                { position: 0, ok: true, mbps: 87.1, ttfbMs: 91 },
-                { position: .25, ok: true, mbps: 98.3, ttfbMs: 86 },
-                { position: .5, ok: true, mbps: 113.8, ttfbMs: 78 },
-                { position: .75, ok: true, mbps: 51.6, ttfbMs: 104 }
-              ]
-            },
-            {
-              host: "upos-sz-mirrorcosov.bilivideo.com",
-              label: "COSOV",
-              minMbps: 1.3,
-              failures: 2,
-              score: -151,
-              samples: [
-                { position: 0, ok: true, mbps: 160.9, ttfbMs: 80 },
-                { position: .25, ok: true, mbps: 1.3, ttfbMs: 620 },
-                { position: .5, ok: false, error: "timeout" },
-                { position: .75, ok: false, error: "timeout" }
-              ]
-            }
-          ]
+      tabs: {
+        query: async () => [{ id: 1, url: "https://www.bilibili.com/video/BV1Preview" }],
+        reload: async () => {},
+        connect: () => ({
+          name: "bili-pilot-popup",
+          postMessage() {},
+          onMessage: { addListener(listener) { popupListener = listener; } },
+          onDisconnect: { addListener() {} }
         })
       }
     };
-    window.addEventListener("message", async (event) => {
-      if (event.source !== window || event.origin !== location.origin) return;
-      if (event.data?.channel !== "BILI_CDN_PILOT_V1" || event.data?.type !== "BCO_PROBE_REQUEST") return;
-      const result = await chrome.runtime.sendMessage();
-      window.postMessage({
-        channel: "BILI_CDN_PILOT_V1",
-        type: "BCO_PROBE_RESULT",
-        requestId: event.data.requestId,
-        result
-      }, location.origin);
-    });
+    Object.defineProperty(window, "chrome", { configurable: true, value: mockApi, writable: true });
   </script>
-  <script src="../protocol.js"></script>
   <script src="../i18n.js"></script>
   <script src="../ui-model.js"></script>
-  <script src="../content.js"></script>
+  <script src="../popup.js"></script>
   <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => window.postMessage({
-        channel: "BILI_CDN_PILOT_V1",
-        type: "BCO_CANDIDATES",
-        plan: {
-          bandwidth: 10354649,
-          candidates: [
-            { host: "upos-sz-mirrorcosov.bilivideo.com", label: "COSOV", isPrimary: true, url: "https://upos-sz-mirrorcosov.bilivideo.com/video.m4s" },
-            { host: "upos-hz-mirrorakam.akamaized.net", label: "Akamai", isPrimary: false, url: "https://upos-hz-mirrorakam.akamaized.net/video.m4s" }
-          ],
-          codec: "avc1.640033",
-          currentPrimary: "upos-sz-mirrorcosov.bilivideo.com",
-          height: 2160,
-          preferredHost: null,
-          prefetchEnabled: true,
-          quality: 120,
-          qualityLabel: "4K",
-          signature: "preview|120|avc1|cosov|akamai",
-          videoKey: "BV1Preview",
-          width: 3840
+    const snapshot = {
+      type: "snapshot",
+      activityVersion: 4,
+      contextInvalidated: false,
+      locale: previewLocale,
+      version: "0.1.3",
+      status: "Akamai is the most stable with a 51.6 Mbps floor. Click Use to switch.",
+      statusKind: "success",
+      scanning: false,
+      prefetchEnabled: true,
+      plan: {
+        bandwidth: 10354649,
+        candidates: [
+          { host: "upos-sz-mirrorcosov.bilivideo.com", label: "COSOV", isPrimary: true },
+          { host: "upos-hz-mirrorakam.akamaized.net", label: "Akamai", isPrimary: false }
+        ],
+        codec: "avc1.640033",
+        currentPrimary: "upos-sz-mirrorcosov.bilivideo.com",
+        features: ["4K", "HDR"],
+        height: 2160,
+        preferredHost: "upos-hz-mirrorakam.akamaized.net",
+        quality: 120,
+        qualityLabel: "4K",
+        signature: "preview|120|avc1|cosov|akamai",
+        videoKey: "BV1Preview",
+        width: 3840
+      },
+      results: [
+        {
+          host: "upos-hz-mirrorakam.akamaized.net",
+          label: "Akamai",
+          minMbps: 51.6,
+          failures: 0,
+          score: 71,
+          samples: [
+            { position: 0, ok: true, mbps: 87.1, ttfbMs: 91 },
+            { position: .25, ok: true, mbps: 98.3, ttfbMs: 86 },
+            { position: .5, ok: true, mbps: 113.8, ttfbMs: 78 },
+            { position: .75, ok: true, mbps: 51.6, ttfbMs: 104 }
+          ]
+        },
+        {
+          host: "upos-sz-mirrorcosov.bilivideo.com",
+          label: "COSOV",
+          minMbps: 1.3,
+          failures: 2,
+          score: -151,
+          samples: [
+            { position: 0, ok: true, mbps: 160.9, ttfbMs: 80 },
+            { position: .25, ok: true, mbps: 1.3, ttfbMs: 620 },
+            { position: .5, ok: false, error: "timeout" },
+            { position: .75, ok: false, error: "timeout" }
+          ]
         }
-      }, location.origin), 120);
-      setTimeout(() => window.postMessage({
-        channel: "BILI_CDN_PILOT_V1",
-        type: "BCO_PREFETCH_STATE",
-        enabled: true,
+      ],
+      prefetch: {
+        backoff: 0,
         bytes: 5242880,
+        circuitOpenInMs: 0,
+        failed: 0,
+        foreground: 1,
+        hosts: {},
         loading: 1,
         queued: 2,
         ready: 4,
-        hosts: {
-          "upos-hz-mirrorakam.akamaized.net": 2,
-          "upos-sz-mirrorcosov.bilivideo.com": 5
-        },
+        retrying: 0,
         segments: [
           { range: "0-1", host: "upos-hz-mirrorakam.akamaized.net", state: "ready" },
           { range: "1-2", host: "upos-sz-mirrorcosov.bilivideo.com", state: "ready" },
           { range: "2-3", host: "upos-sz-mirrorcosov.bilivideo.com", state: "ready" },
           { range: "3-4", host: "upos-sz-mirrorcosov.bilivideo.com", state: "ready" },
-          { range: "4-5", host: "upos-sz-mirrorcosov.bilivideo.com", state: "loading" },
+          { range: "4-5", host: "upos-sz-mirrorcosov.bilivideo.com", state: "loading", foreground: true },
           { range: "5-6", host: "upos-sz-mirrorcosov.bilivideo.com", state: "queued" },
           { range: "6-7", host: "upos-hz-mirrorakam.akamaized.net", state: "queued" }
-        ],
-        lastHit: { bytes: 838860 }
-      }, location.origin), 180);
-      setTimeout(() => window.postMessage({
-        channel: "BILI_CDN_PILOT_V1",
-        type: "BCO_ACTIVITY",
-        entries: [
-          { id: 1, at: Date.now() - 2400, type: "probe-candidate-start", detail: { host: "upos-hz-mirrorakam.akamaized.net", mode: "quick", positions: [0, 0.5] } },
-          { id: 2, at: Date.now() - 1700, type: "probe-candidate-result", detail: { host: "upos-hz-mirrorakam.akamaized.net", failures: 0, minMbps: 51.6 } },
-          { id: 3, at: Date.now() - 900, type: "segment-prefetch-start", detail: { host: "upos-sz-mirrorcosov.bilivideo.com", index: 4, range: "bytes=124000-932000", attempt: 1, candidateCount: 2 } },
-          { id: 4, at: Date.now() - 200, type: "segment-prefetch-ready", detail: { host: "upos-sz-mirrorcosov.bilivideo.com", index: 4, range: "bytes=124000-932000", bytes: 808001, durationMs: 318.4 } }
         ]
-      }, location.origin), 220);
+      },
+      activity: [
+        { id: "page-1", at: Date.now() - 2400, title: "Testing Akamai", detail: "" },
+        { id: "page-2", at: Date.now() - 1700, title: "Tested Akamai", detail: "Floor 51.6 Mbps · 0 failures" },
+        { id: "page-3", at: Date.now() - 900, title: "COSOV · #5 · Downloading", detail: "" },
+        { id: "page-4", at: Date.now() - 200, title: "COSOV · #5 · Ready", detail: "0.8 MB in 318 ms" }
+      ]
+    };
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => emit(snapshot), 80);
     });
   </script>
 </body>

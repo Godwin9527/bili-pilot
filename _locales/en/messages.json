@@ -251,6 +251,9 @@
   "pageProbeTimedOut": {
     "message": "Page-side probe timed out"
   },
+  "popupConnectFailed": {
+    "message": "Bili Pilot is not connected to this tab yet. Reload the page and try again."
+  },
   "extensionUpdated": {
     "message": "The extension was updated. Reload this page before scanning again."
   },

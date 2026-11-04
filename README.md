@@ -60,10 +60,12 @@ Firefox removes temporary extensions when the browser exits. A normal persistent
 
 1. Open a regular `https://www.bilibili.com/video/...` page and start playback.
 2. Select a fixed quality such as 1080P60 or 4K so measurements stay on one video representation.
-3. Expand the **Bili Pilot** panel and wait for the active quality and CDN candidates to appear.
+3. Click the **Bili Pilot** toolbar icon to open its popup, then wait for the active quality and CDN candidates to appear.
 4. Run **Quick scan** to compare route stability.
 5. Either select **Use** to pin a CDN manually, or enable **Automatic routing + pre-cache**.
-6. When pre-cache is enabled, let the player build at least 15 seconds of buffer. The panel will show upcoming segments as `Planned`, `Downloading`, `Retrying`, `Ready`, or `Re-probing`.
+6. When pre-cache is enabled, let the player build at least 15 seconds of buffer. The popup shows upcoming segments as `Planned`, `Downloading`, `Retrying`, `Ready`, or `Re-probing`.
+
+The popup only reads the state that the content script keeps for the active tab; closing it does not stop scanning, routing, or pre-caching.
 
 `Ready` means the complete byte range is in memory and can be delivered to the player. A partial download is never marked ready and is never served as a cache hit.
 
@@ -115,9 +117,9 @@ Signed URLs are used only for local Range requests. Bili Pilot does not collect 
 
 ## Troubleshooting
 
-### The panel does not appear
+### The popup reports that it is not connected
 
-Confirm that the extension is enabled, reload it on `chrome://extensions`, then reload the Bilibili tab.
+Reload the Bilibili tab so the content script can attach, then reopen the popup. After reloading the extension on `chrome://extensions` every existing tab must be reloaded once.
 
 ### The panel keeps waiting for a video
 
