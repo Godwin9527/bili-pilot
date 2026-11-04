@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const textExtensions = new Set([".css", ".html", ".js", ".json", ".md", ".mjs"]);
-const ignoredDirectories = new Set([".git", "node_modules"]);
+const ignoredDirectories = new Set([".git", ".workbuddy", "node_modules"]);
 
 async function collectTextFiles(directory) {
   const files = [];
